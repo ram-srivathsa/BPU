@@ -2,6 +2,7 @@
 Combining the Branch predictor and the BTB into a Branch Prediction Unit
 
 Author:Ram Srivathsa Sankar
+
 Mentor:Rahul Bodduna
 
 The 'bpu' folder contains the .bsv files for the bpu, predictor and btb. The 'Testbench' folder contains the .bsv file for the testbench as well as the necessary .dump and .bin files for testing the Dhrystone benchmark. 
