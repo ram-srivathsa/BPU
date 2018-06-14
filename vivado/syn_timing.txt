@@ -1,7 +1,7 @@
 Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2016.1 (lin64) Build 1538259 Fri Apr  8 15:45:23 MDT 2016
-| Date         : Thu Jun 14 11:54:05 2018
+| Date         : Thu Jun 14 15:06:57 2018
 | Host         : ram-Lenovo-ideapad-520-15IKB running 64-bit Ubuntu 16.04.4 LTS
 | Command      : report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -file .//fpga/mkbpu/syn_timing.txt
 | Design       : mkbpu
@@ -315,7 +315,7 @@ prediction_response_get[9]
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      5.784        0.000                      0                  578        0.070        0.000                      0                  578        3.750        0.000                       0                   281  
+      5.820        0.000                      0                  559        0.070        0.000                      0                  559        3.750        0.000                       0                   280  
 
 
 All user specified timing constraints are met.
@@ -338,7 +338,7 @@ CLK    {0.000 5.000}      10.000          100.000
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-CLK                 5.784        0.000                      0                  578        0.070        0.000                      0                  578        3.750        0.000                       0                   281  
+CLK                 5.820        0.000                      0                  559        0.070        0.000                      0                  559        3.750        0.000                       0                   280  
 
 
 ------------------------------------------------------------------------------------------------
@@ -389,7 +389,7 @@ Path Group    From Clock    To Clock
 From Clock:  CLK
   To Clock:  CLK
 
-Setup :            0  Failing Endpoints,  Worst Slack        5.784ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        5.820ns,  Total Violation        0.000ns
 Hold  :            0  Failing Endpoints,  Worst Slack        0.070ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack        3.750ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
@@ -397,16 +397,16 @@ PW    :            0  Failing Endpoints,  Worst Slack        3.750ns,  Total Vio
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             5.784ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank1/RAM_reg/DIBDI[10]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[0]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        3.299ns  (logic 0.897ns (27.190%)  route 2.402ns (72.810%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -427,18 +427,21 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      r  tage_predictor/bram_bank1_i_39/I0
-                         LUT2 (Prop_lut2_I0_O)        0.295     3.789 r  tage_predictor/bram_bank1_i_39/O
-                         net (fo=35, unplaced)        1.037     4.826    tage_predictor/bram_bank1_i_39_n_0
-                                                                      r  tage_predictor/bram_bank1_i_23/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     4.950 r  tage_predictor/bram_bank1_i_23/O
-                         net (fo=1, unplaced)         0.803     5.753    tage_predictor/bram_bank1/DIB[10]
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/DIBDI[10]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[0]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -449,28 +452,27 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank1/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[0]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[10])
-                                                     -0.737    11.537    tage_predictor/bram_bank1/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[0]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.753    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  5.784    
+                         slack                                  5.820    
 
-Slack (MET) :             5.784ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank1/RAM_reg/DIBDI[9]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[1]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        3.299ns  (logic 0.897ns (27.190%)  route 2.402ns (72.810%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -491,18 +493,21 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      r  tage_predictor/bram_bank1_i_39/I0
-                         LUT2 (Prop_lut2_I0_O)        0.295     3.789 r  tage_predictor/bram_bank1_i_39/O
-                         net (fo=35, unplaced)        1.037     4.826    tage_predictor/bram_bank1_i_39_n_0
-                                                                      r  tage_predictor/bram_bank1_i_24/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     4.950 r  tage_predictor/bram_bank1_i_24/O
-                         net (fo=1, unplaced)         0.803     5.753    tage_predictor/bram_bank1/DIB[9]
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/DIBDI[9]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -513,28 +518,27 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank1/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[9])
-                                                     -0.737    11.537    tage_predictor/bram_bank1/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[1]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.753    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  5.784    
+                         slack                                  5.820    
 
-Slack (MET) :             5.784ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank3/RAM_reg/DIBDI[10]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[2]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        3.299ns  (logic 0.897ns (27.190%)  route 2.402ns (72.810%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -555,18 +559,21 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      r  tage_predictor/bram_bank1_i_39/I0
-                         LUT2 (Prop_lut2_I0_O)        0.295     3.789 r  tage_predictor/bram_bank1_i_39/O
-                         net (fo=35, unplaced)        1.037     4.826    tage_predictor/bram_bank1_i_39_n_0
-                                                                      r  tage_predictor/bram_bank3_i_23/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     4.950 r  tage_predictor/bram_bank3_i_23/O
-                         net (fo=1, unplaced)         0.803     5.753    tage_predictor/bram_bank3/DIB[10]
-                         RAMB18E1                                     r  tage_predictor/bram_bank3/RAM_reg/DIBDI[10]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[2]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -577,28 +584,27 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank3/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank3/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[2]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[10])
-                                                     -0.737    11.537    tage_predictor/bram_bank3/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[2]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.753    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  5.784    
+                         slack                                  5.820    
 
-Slack (MET) :             5.784ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank3/RAM_reg/DIBDI[9]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[3]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        3.299ns  (logic 0.897ns (27.190%)  route 2.402ns (72.810%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -619,18 +625,21 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      r  tage_predictor/bram_bank1_i_39/I0
-                         LUT2 (Prop_lut2_I0_O)        0.295     3.789 r  tage_predictor/bram_bank1_i_39/O
-                         net (fo=35, unplaced)        1.037     4.826    tage_predictor/bram_bank1_i_39_n_0
-                                                                      r  tage_predictor/bram_bank3_i_24/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     4.950 r  tage_predictor/bram_bank3_i_24/O
-                         net (fo=1, unplaced)         0.803     5.753    tage_predictor/bram_bank3/DIB[9]
-                         RAMB18E1                                     r  tage_predictor/bram_bank3/RAM_reg/DIBDI[9]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[3]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -641,28 +650,27 @@ Slack (MET) :             5.784ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank3/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank3/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[3]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[9])
-                                                     -0.737    11.537    tage_predictor/bram_bank3/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[3]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.753    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  5.784    
+                         slack                                  5.820    
 
-Slack (MET) :             5.961ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_global_flush_addr_reg[10]/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank2/RAM_reg/ENBWREN
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[4]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        3.416ns  (logic 0.897ns (26.259%)  route 2.519ns (73.741%))
-  Logic Levels:           2  (LUT6=2)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -683,18 +691,21 @@ Slack (MET) :             5.961ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[10]/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 f  tage_predictor/rg_global_flush_addr_reg[10]/Q
-                         net (fo=58, unplaced)        1.051     3.983    tage_predictor/rg_global_flush_addr_reg__0[10]
-                                                                      f  tage_predictor/bram_bank2_i_33/I0
-                         LUT6 (Prop_lut6_I0_O)        0.295     4.278 r  tage_predictor/bram_bank2_i_33/O
-                         net (fo=1, unplaced)         0.665     4.943    tage_predictor/bram_bank2_i_33_n_0
-                                                                      r  tage_predictor/bram_bank2_i_11/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     5.067 r  tage_predictor/bram_bank2_i_11/O
-                         net (fo=1, unplaced)         0.803     5.870    tage_predictor/bram_bank2/ENB
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ENBWREN
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[4]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -705,28 +716,27 @@ Slack (MET) :             5.961ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank2/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[4]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_ENBWREN)
-                                                     -0.443    11.831    tage_predictor/bram_bank2/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[4]
   -------------------------------------------------------------------
-                         required time                         11.831    
-                         arrival time                          -5.870    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  5.961    
+                         slack                                  5.820    
 
-Slack (MET) :             6.102ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bimodal/RAM_reg/DIBDI[2]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[5]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        2.981ns  (logic 0.923ns (30.963%)  route 2.058ns (69.037%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -747,18 +757,21 @@ Slack (MET) :             6.102ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      r  tage_predictor/bram_bimodal_i_18/I0
-                         LUT2 (Prop_lut2_I0_O)        0.321     3.815 r  tage_predictor/bram_bimodal_i_18/O
-                         net (fo=5, unplaced)         0.693     4.508    tage_predictor/bram_bimodal_i_18_n_0
-                                                                      r  tage_predictor/bram_bimodal_i_15/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     4.632 r  tage_predictor/bram_bimodal_i_15/O
-                         net (fo=1, unplaced)         0.803     5.435    tage_predictor/bram_bimodal/DIB[2]
-                         RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/DIBDI[2]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[5]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -769,28 +782,27 @@ Slack (MET) :             6.102ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bimodal/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[5]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[2])
-                                                     -0.737    11.537    tage_predictor/bram_bimodal/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[5]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.435    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  6.102    
+                         slack                                  5.820    
 
-Slack (MET) :             6.299ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank4/RAM_reg/DIBDI[1]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[6]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        2.784ns  (logic 0.897ns (32.220%)  route 1.887ns (67.780%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -811,18 +823,21 @@ Slack (MET) :             6.299ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 f  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      f  tage_predictor/bram_bank1_i_39/I0
-                         LUT2 (Prop_lut2_I0_O)        0.295     3.789 f  tage_predictor/bram_bank1_i_39/O
-                         net (fo=35, unplaced)        0.522     4.311    tage_predictor/bram_bank1_i_39_n_0
-                                                                      f  tage_predictor/bram_bank4_i_32/I5
-                         LUT6 (Prop_lut6_I5_O)        0.124     4.435 r  tage_predictor/bram_bank4_i_32/O
-                         net (fo=1, unplaced)         0.803     5.238    tage_predictor/bram_bank4/DIB[1]
-                         RAMB18E1                                     r  tage_predictor/bram_bank4/RAM_reg/DIBDI[1]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[6]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -833,28 +848,27 @@ Slack (MET) :             6.299ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank4/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank4/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[6]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[1])
-                                                     -0.737    11.537    tage_predictor/bram_bank4/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[6]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.238    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  6.299    
+                         slack                                  5.820    
 
-Slack (MET) :             6.318ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bimodal/RAM_reg/DIBDI[1]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[7]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        2.765ns  (logic 0.923ns (33.382%)  route 1.842ns (66.618%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -875,18 +889,21 @@ Slack (MET) :             6.318ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      r  tage_predictor/bram_bimodal_i_18/I0
-                         LUT2 (Prop_lut2_I0_O)        0.321     3.815 r  tage_predictor/bram_bimodal_i_18/O
-                         net (fo=5, unplaced)         0.477     4.292    tage_predictor/bram_bimodal_i_18_n_0
-                                                                      r  tage_predictor/bram_bimodal_i_16/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     4.416 r  tage_predictor/bram_bimodal_i_16/O
-                         net (fo=1, unplaced)         0.803     5.219    tage_predictor/bram_bimodal/DIB[1]
-                         RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/DIBDI[1]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[7]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -897,28 +914,27 @@ Slack (MET) :             6.318ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bimodal/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[7]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[1])
-                                                     -0.737    11.537    tage_predictor/bram_bimodal/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[7]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.219    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  6.318    
+                         slack                                  5.820    
 
-Slack (MET) :             6.329ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank1/RAM_reg/DIBDI[11]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[8]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        2.754ns  (logic 0.897ns (32.571%)  route 1.857ns (67.429%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -939,18 +955,21 @@ Slack (MET) :             6.329ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 f  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      f  tage_predictor/bram_bank1_i_39/I0
-                         LUT2 (Prop_lut2_I0_O)        0.295     3.789 f  tage_predictor/bram_bank1_i_39/O
-                         net (fo=35, unplaced)        0.492     4.281    tage_predictor/bram_bank1_i_39_n_0
-                                                                      f  tage_predictor/bram_bank1_i_22/I5
-                         LUT6 (Prop_lut6_I5_O)        0.124     4.405 r  tage_predictor/bram_bank1_i_22/O
-                         net (fo=1, unplaced)         0.803     5.208    tage_predictor/bram_bank1/DIB[11]
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/DIBDI[11]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[8]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -961,28 +980,27 @@ Slack (MET) :             6.329ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank1/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[8]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[11])
-                                                     -0.737    11.537    tage_predictor/bram_bank1/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[8]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.208    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  6.329    
+                         slack                                  5.820    
 
-Slack (MET) :             6.329ns  (required time - arrival time)
-  Source:                 tage_predictor/rg_flush_reg/C
+Slack (MET) :             5.820ns  (required time - arrival time)
+  Source:                 tage_predictor/rg_global_flush_addr_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/bram_bank1/RAM_reg/DIBDI[2]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            tage_predictor/rg_global_flush_addr_reg[9]/R
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (CLK rise@10.000ns - CLK rise@0.000ns)
-  Data Path Delay:        2.754ns  (logic 0.897ns (32.571%)  route 1.857ns (67.429%))
-  Logic Levels:           2  (LUT2=1 LUT6=1)
+  Data Path Delay:        3.443ns  (logic 1.045ns (30.351%)  route 2.398ns (69.649%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns = ( 12.131 - 10.000 ) 
     Source Clock Delay      (SCD):    2.454ns
@@ -1003,18 +1021,21 @@ Slack (MET) :             6.329ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_flush_reg/C
+                         net (fo=279, unplaced)       0.584     2.454    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.478     2.932 f  tage_predictor/rg_flush_reg/Q
-                         net (fo=75, unplaced)        0.562     3.494    tage_predictor/rg_flush
-                                                                      f  tage_predictor/bram_bank1_i_39/I0
-                         LUT2 (Prop_lut2_I0_O)        0.295     3.789 f  tage_predictor/bram_bank1_i_39/O
-                         net (fo=35, unplaced)        0.492     4.281    tage_predictor/bram_bank1_i_39_n_0
-                                                                      f  tage_predictor/bram_bank1_i_31/I5
-                         LUT6 (Prop_lut6_I5_O)        0.124     4.405 r  tage_predictor/bram_bank1_i_31/O
-                         net (fo=1, unplaced)         0.803     5.208    tage_predictor/bram_bank1/DIB[2]
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/DIBDI[2]
+                         FDRE (Prop_fdre_C_Q)         0.478     2.932 r  tage_predictor/rg_global_flush_addr_reg[1]/Q
+                         net (fo=10, unplaced)        0.806     3.738    tage_predictor/rg_global_flush_addr_reg__0[1]
+                                                                      r  tage_predictor/rg_global_flush_addr[8]_i_2/I1
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.057 f  tage_predictor/rg_global_flush_addr[8]_i_2/O
+                         net (fo=4, unplaced)         0.473     4.530    tage_predictor/rg_global_flush_addr[8]_i_2_n_0
+                                                                      f  tage_predictor/rg_global_flush_addr[9]_i_4/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.654 r  tage_predictor/rg_global_flush_addr[9]_i_4/O
+                         net (fo=3, unplaced)         0.467     5.121    tage_predictor/rg_global_flush_addr[9]_i_4_n_0
+                                                                      r  tage_predictor/rg_global_flush_addr[9]_i_1/I1
+                         LUT5 (Prop_lut5_I1_O)        0.124     5.245 r  tage_predictor/rg_global_flush_addr[9]_i_1/O
+                         net (fo=10, unplaced)        0.652     5.897    tage_predictor/rg_global_flush_addr[9]_i_1_n_0
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[9]/R
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)       10.000    10.000 r  
@@ -1025,17 +1046,16 @@ Slack (MET) :             6.329ns  (required time - arrival time)
                          net (fo=1, unplaced)         0.763    11.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091    11.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439    12.131    tage_predictor/bram_bank1/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/CLKBWRCLK
+                         net (fo=279, unplaced)       0.439    12.131    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_flush_addr_reg[9]/C
                          clock pessimism              0.179    12.309    
                          clock uncertainty           -0.035    12.274    
-                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_DIBDI[2])
-                                                     -0.737    11.537    tage_predictor/bram_bank1/RAM_reg
+                         FDRE (Setup_fdre_C_R)       -0.557    11.717    tage_predictor/rg_global_flush_addr_reg[9]
   -------------------------------------------------------------------
-                         required time                         11.537    
-                         arrival time                          -5.208    
+                         required time                         11.717    
+                         arrival time                          -5.897    
   -------------------------------------------------------------------
-                         slack                                  6.329    
+                         slack                                  5.820    
 
 
 
@@ -1068,7 +1088,7 @@ Slack (MET) :             0.070ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          SRLC32E                                      r  tage_predictor/rg_global_history_reg[71]_srl32___rg_global_history_reg_r_30/CLK
   -------------------------------------------------------------------    -------------------
                          SRLC32E (Prop_srlc32e_CLK_Q31)
@@ -1085,7 +1105,7 @@ Slack (MET) :             0.070ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          SRL16E                                       r  tage_predictor/rg_global_history_reg[77]_srl6___rg_global_history_reg_r_36/CLK
                          clock pessimism             -0.210     0.824    
                          SRL16E (Hold_srl16e_CLK_D)
@@ -1121,7 +1141,7 @@ Slack (MET) :             0.091ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg[9]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg[9]/Q
@@ -1137,7 +1157,7 @@ Slack (MET) :             0.091ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          SRL16E                                       r  tage_predictor/rg_global_history_reg[17]_srl8___rg_global_history_reg_r_6/CLK
                          clock pessimism             -0.210     0.824    
                          SRL16E (Hold_srl16e_CLK_D)
@@ -1173,7 +1193,7 @@ Slack (MET) :             0.110ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg[19]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg[19]/Q
@@ -1189,7 +1209,7 @@ Slack (MET) :             0.110ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          SRLC32E                                      r  tage_predictor/rg_global_history_reg[37]_srl18___rg_global_history_reg_r_16/CLK
                          clock pessimism             -0.210     0.824    
                          SRLC32E (Hold_srlc32e_CLK_D)
@@ -1225,7 +1245,7 @@ Slack (MET) :             0.112ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg[39]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg[39]/Q
@@ -1241,7 +1261,7 @@ Slack (MET) :             0.112ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          SRLC32E                                      r  tage_predictor/rg_global_history_reg[71]_srl32___rg_global_history_reg_r_30/CLK
                          clock pessimism             -0.210     0.824    
                          SRLC32E (Hold_srlc32e_CLK_D)
@@ -1277,7 +1297,7 @@ Slack (MET) :             0.132ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg_r_37/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg_r_37/Q
@@ -1296,7 +1316,7 @@ Slack (MET) :             0.132ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg[79]/C
                          clock pessimism             -0.210     0.824    
                          FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_global_history_reg[79]
@@ -1331,7 +1351,7 @@ Slack (MET) :             0.137ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg_r_7/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg_r_7/Q
@@ -1350,7 +1370,7 @@ Slack (MET) :             0.137ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg[19]/C
                          clock pessimism             -0.210     0.824    
                          FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_global_history_reg[19]
@@ -1385,7 +1405,7 @@ Slack (MET) :             0.137ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg_r_17/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg_r_17/Q
@@ -1404,7 +1424,7 @@ Slack (MET) :             0.137ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_global_history_reg[39]/C
                          clock pessimism             -0.210     0.824    
                          FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_global_history_reg[39]
@@ -1439,7 +1459,7 @@ Slack (MET) :             0.140ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_bank1_csr_p_reg[5]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_bank1_csr_p_reg[5]/Q
@@ -1458,7 +1478,7 @@ Slack (MET) :             0.140ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
                          FDRE                                         r  tage_predictor/rg_bank1_csr_p_reg[6]/C
                          clock pessimism             -0.210     0.824    
                          FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_bank1_csr_p_reg[6]
@@ -1468,15 +1488,15 @@ Slack (MET) :             0.140ns  (arrival time - required time)
   -------------------------------------------------------------------
                          slack                                  0.140    
 
-Slack (MET) :             0.142ns  (arrival time - required time)
-  Source:                 tage_predictor/rg_global_history_reg[19]/C
+Slack (MET) :             0.143ns  (arrival time - required time)
+  Source:                 tage_predictor/rg_global_history_reg[79]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/rg_bank2_csr_s_reg[6]/D
+  Destination:            tage_predictor/rg_bank4_csr_s_reg[3]/D
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (CLK rise@0.000ns - CLK rise@0.000ns)
-  Data Path Delay:        0.386ns  (logic 0.245ns (63.437%)  route 0.141ns (36.563%))
+  Data Path Delay:        0.387ns  (logic 0.248ns (64.136%)  route 0.139ns (35.864%))
   Logic Levels:           1  (LUT2=1)
   Clock Path Skew:        0.145ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    1.033ns
@@ -1493,15 +1513,15 @@ Slack (MET) :             0.142ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_global_history_reg[19]/C
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_history_reg[79]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg[19]/Q
-                         net (fo=4, unplaced)         0.141     0.967    tage_predictor/p_2_in8_in
-                                                                      r  tage_predictor/rg_bank2_csr_s[6]_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.098     1.065 r  tage_predictor/rg_bank2_csr_s[6]_i_1/O
-                         net (fo=1, unplaced)         0.000     1.065    tage_predictor/rg_bank2_csr_s$D_IN[6]
-                         FDRE                                         r  tage_predictor/rg_bank2_csr_s_reg[6]/D
+                         FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg[79]/Q
+                         net (fo=3, unplaced)         0.139     0.964    tage_predictor/p_2_in
+                                                                      r  tage_predictor/rg_bank4_csr_s[3]_i_1/I1
+                         LUT2 (Prop_lut2_I1_O)        0.101     1.065 r  tage_predictor/rg_bank4_csr_s[3]_i_1/O
+                         net (fo=1, unplaced)         0.000     1.065    tage_predictor/rg_bank4_csr_s$D_IN[3]
+                         FDRE                                         r  tage_predictor/rg_bank4_csr_s_reg[3]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -1512,25 +1532,25 @@ Slack (MET) :             0.142ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_bank2_csr_s_reg[6]/C
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_bank4_csr_s_reg[3]/C
                          clock pessimism             -0.210     0.824    
-                         FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_bank2_csr_s_reg[6]
+                         FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_bank4_csr_s_reg[3]
   -------------------------------------------------------------------
                          required time                         -0.923    
                          arrival time                           1.065    
   -------------------------------------------------------------------
-                         slack                                  0.142    
+                         slack                                  0.143    
 
-Slack (MET) :             0.146ns  (arrival time - required time)
-  Source:                 tage_predictor/rg_bank3_csr_s_reg[4]/C
+Slack (MET) :             0.145ns  (arrival time - required time)
+  Source:                 tage_predictor/rg_global_history_reg[19]/C
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            tage_predictor/rg_bank3_csr_s_reg[5]/D
+  Destination:            tage_predictor/rg_bank2_csr_p_reg[4]/D
                             (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             CLK
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (CLK rise@0.000ns - CLK rise@0.000ns)
-  Data Path Delay:        0.390ns  (logic 0.245ns (62.888%)  route 0.145ns (37.112%))
+  Data Path Delay:        0.389ns  (logic 0.248ns (63.719%)  route 0.141ns (36.281%))
   Logic Levels:           1  (LUT2=1)
   Clock Path Skew:        0.145ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    1.033ns
@@ -1547,15 +1567,15 @@ Slack (MET) :             0.146ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_bank3_csr_s_reg[4]/C
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_global_history_reg[19]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_bank3_csr_s_reg[4]/Q
-                         net (fo=6, unplaced)         0.145     0.970    tage_predictor/y__h12001[5]
-                                                                      r  tage_predictor/rg_bank3_csr_s[5]_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.098     1.068 r  tage_predictor/rg_bank3_csr_s[5]_i_1/O
-                         net (fo=1, unplaced)         0.000     1.068    tage_predictor/rg_bank3_csr_s$D_IN[5]
-                         FDRE                                         r  tage_predictor/rg_bank3_csr_s_reg[5]/D
+                         FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_global_history_reg[19]/Q
+                         net (fo=4, unplaced)         0.141     0.967    tage_predictor/p_2_in8_in
+                                                                      r  tage_predictor/rg_bank2_csr_p[4]_i_1/I1
+                         LUT2 (Prop_lut2_I1_O)        0.101     1.068 r  tage_predictor/rg_bank2_csr_p[4]_i_1/O
+                         net (fo=1, unplaced)         0.000     1.068    tage_predictor/rg_bank2_csr_p$D_IN[4]
+                         FDRE                                         r  tage_predictor/rg_bank2_csr_p_reg[4]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -1566,15 +1586,15 @@ Slack (MET) :             0.146ns  (arrival time - required time)
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_bank3_csr_s_reg[5]/C
+                         net (fo=279, unplaced)       0.259     1.033    tage_predictor/CLK
+                         FDRE                                         r  tage_predictor/rg_bank2_csr_p_reg[4]/C
                          clock pessimism             -0.210     0.824    
-                         FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_bank3_csr_s_reg[5]
+                         FDRE (Hold_fdre_C_D)         0.099     0.923    tage_predictor/rg_bank2_csr_p_reg[4]
   -------------------------------------------------------------------
                          required time                         -0.923    
                          arrival time                           1.068    
   -------------------------------------------------------------------
-                         slack                                  0.146    
+                         slack                                  0.145    
 
 
 
@@ -1658,7 +1678,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -1747,7 +1767,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -1836,7 +1856,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -1921,7 +1941,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -2010,7 +2030,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -2095,7 +2115,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -2176,7 +2196,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -2265,7 +2285,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -2350,7 +2370,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -2431,7 +2451,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.803     1.774    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.096     1.870 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.584     2.454    btb/bram_way4/CLKA
+                         net (fo=279, unplaced)       0.584     2.454    btb/bram_way4/CLKA
                          RAMB18E1                                     r  btb/bram_way4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOBDO[1])
@@ -2514,7 +2534,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    CLK_IBUF_BUFG
+                         net (fo=279, unplaced)       0.114     0.679    CLK_IBUF_BUFG
                          FDRE                                         r  rg_pc_copy_reg[0]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.147     0.826 r  rg_pc_copy_reg[0]/Q
@@ -2526,45 +2546,6 @@ Slack:                    inf
                          OBUF (Prop_obuf_I_O)         1.151     2.694 r  prediction_response_get_OBUF[0]_inst/O
                          net (fo=0)                   0.000     2.694    prediction_response_get[0]
                                                                       r  prediction_response_get[0] (OUT)
-  -------------------------------------------------------------------    -------------------
-
-Slack:                    inf
-  Source:                 tage_predictor/rg_pc_copy_reg[0]/C
-                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            prediction_response_get[40]
-                            (output port)
-  Path Group:             (none)
-  Path Type:              Min at Fast Process Corner
-  Data Path Delay:        2.030ns  (logic 1.396ns (68.768%)  route 0.634ns (31.232%))
-  Logic Levels:           2  (LUT6=1 OBUF=1)
-  Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.050ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock CLK rise edge)        0.000     0.000 r  
-                                                      0.000     0.000 r  CLK (IN)
-                         net (fo=0)                   0.000     0.000    CLK
-                                                                      r  CLK_IBUF_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.200     0.200 r  CLK_IBUF_inst/O
-                         net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
-                                                                      r  CLK_IBUF_BUFG_inst/I
-                         BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/CLK
-                         FDRE                                         r  tage_predictor/rg_pc_copy_reg[0]/C
-  -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.147     0.826 r  tage_predictor/rg_pc_copy_reg[0]/Q
-                         net (fo=7, unplaced)         0.295     1.121    tage_predictor/rg_pc_copy_reg_n_0_[0]
-                                                                      r  tage_predictor/mn_get[5]_INST_0/I4
-                         LUT6 (Prop_lut6_I4_O)        0.098     1.219 r  tage_predictor/mn_get[5]_INST_0/O
-                         net (fo=14, unplaced)        0.338     1.558    prediction_response_get_OBUF[40]
-                                                                      r  prediction_response_get_OBUF[40]_inst/I
-                         OBUF (Prop_obuf_I_O)         1.151     2.708 r  prediction_response_get_OBUF[40]_inst/O
-                         net (fo=0)                   0.000     2.708    prediction_response_get[40]
-                                                                      r  prediction_response_get[40] (OUT)
   -------------------------------------------------------------------    -------------------
 
 Slack:                    inf
@@ -2592,7 +2573,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[1])
@@ -2629,7 +2610,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[2])
@@ -2666,7 +2647,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[3])
@@ -2703,7 +2684,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bank4/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bank4/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank4/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[0])
@@ -2740,7 +2721,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bank3/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bank3/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank3/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[0])
@@ -2777,7 +2758,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[0])
@@ -2814,7 +2795,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bank1/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bank1/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[0])
@@ -2851,7 +2832,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
                                                                       r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
+                         net (fo=279, unplaced)       0.114     0.679    tage_predictor/bram_bimodal/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bimodal/RAM_reg/CLKARDCLK
   -------------------------------------------------------------------    -------------------
                          RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[0])
@@ -2863,6 +2844,45 @@ Slack:                    inf
                                                                       r  prediction_response_get[45] (OUT)
   -------------------------------------------------------------------    -------------------
 
+Slack:                    inf
+  Source:                 btb/bram_replacement/DOA_R_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            prediction_response_get[32]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        2.078ns  (logic 1.395ns (67.135%)  route 0.683ns (32.865%))
+  Logic Levels:           2  (LUT5=1 OBUF=1)
+  Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock CLK rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  CLK (IN)
+                         net (fo=0)                   0.000     0.000    CLK
+                                                                      r  CLK_IBUF_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.200     0.200 r  CLK_IBUF_inst/O
+                         net (fo=1, unplaced)         0.338     0.539    CLK_IBUF
+                                                                      r  CLK_IBUF_BUFG_inst/I
+                         BUFG (Prop_bufg_I_O)         0.026     0.565 r  CLK_IBUF_BUFG_inst/O
+                         net (fo=279, unplaced)       0.114     0.679    btb/bram_replacement/CLKA
+                         FDRE                                         r  btb/bram_replacement/DOA_R_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+                         FDRE (Prop_fdre_C_Q)         0.147     0.826 r  btb/bram_replacement/DOA_R_reg[0]/Q
+                         net (fo=2, unplaced)         0.344     1.170    btb/bram_replacement$DOA[0]
+                                                                      r  btb/mn_get[32]_INST_0/I1
+                         LUT5 (Prop_lut5_I1_O)        0.097     1.267 r  btb/mn_get[32]_INST_0/O
+                         net (fo=1, unplaced)         0.338     1.605    prediction_response_get_OBUF[32]
+                                                                      r  prediction_response_get_OBUF[32]_inst/I
+                         OBUF (Prop_obuf_I_O)         1.151     2.756 r  prediction_response_get_OBUF[32]_inst/O
+                         net (fo=0)                   0.000     2.756    prediction_response_get[32]
+                                                                      r  prediction_response_get[32] (OUT)
+  -------------------------------------------------------------------    -------------------
+
 
 
 
@@ -2872,22 +2892,22 @@ Path Group:  (none)
 From Clock:  
   To Clock:  CLK
 
-Max Delay          1096 Endpoints
-Min Delay          1096 Endpoints
+Max Delay          1094 Endpoints
+Min Delay          1094 Endpoints
 --------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
 Slack:                    inf
-  Source:                 ma_training_training_data[67]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[10]
+  Destination:            tage_predictor/bram_bank1/RAM_reg/DIBDI[10]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        4.167ns  (logic 1.369ns (32.859%)  route 2.798ns (67.141%))
-  Logic Levels:           4  (IBUF=1 LUT3=1 LUT5=1 LUT6=1)
+  Data Path Delay:        5.136ns  (logic 1.583ns (30.826%)  route 3.553ns (69.174%))
+  Logic Levels:           6  (IBUF=1 LUT3=1 LUT4=1 LUT5=2 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -2895,21 +2915,27 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 r  ma_training_training_data[67] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[67]
-                                                                      r  ma_training_training_data_IBUF[67]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[67]_inst/O
-                         net (fo=14, unplaced)        0.803     1.774    tage_predictor/ma_train_training_data[21]
-                                                                      r  tage_predictor/bram_bank2_i_42/I1
-                         LUT3 (Prop_lut3_I1_O)        0.150     1.924 r  tage_predictor/bram_bank2_i_42/O
-                         net (fo=2, unplaced)         0.743     2.667    tage_predictor/bram_bank2_i_42_n_0
-                                                                      r  tage_predictor/bram_bank2_i_36/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     2.791 r  tage_predictor/bram_bank2_i_36/O
-                         net (fo=1, unplaced)         0.449     3.240    tage_predictor/bram_bank2_i_36_n_0
-                                                                      r  tage_predictor/bram_bank2_i_23/I4
-                         LUT5 (Prop_lut5_I4_O)        0.124     3.364 r  tage_predictor/bram_bank2_i_23/O
-                         net (fo=1, unplaced)         0.803     4.167    tage_predictor/bram_bank2/DIB[10]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[10]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 r  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      r  tage_predictor/bram_bank1_i_44/I3
+                         LUT6 (Prop_lut6_I3_O)        0.124     2.549 f  tage_predictor/bram_bank1_i_44/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank1_i_44_n_0
+                                                                      f  tage_predictor/bram_bank1_i_34/I0
+                         LUT4 (Prop_lut4_I0_O)        0.116     3.114 f  tage_predictor/bram_bank1_i_34/O
+                         net (fo=22, unplaced)        0.511     3.625    tage_predictor/bram_bank1_i_34_n_0
+                                                                      f  tage_predictor/bram_bank1_i_38/I0
+                         LUT5 (Prop_lut5_I0_O)        0.124     3.749 r  tage_predictor/bram_bank1_i_38/O
+                         net (fo=2, unplaced)         0.460     4.209    tage_predictor/bram_bank1_i_38_n_0
+                                                                      r  tage_predictor/bram_bank1_i_23/I0
+                         LUT5 (Prop_lut5_I0_O)        0.124     4.333 r  tage_predictor/bram_bank1_i_23/O
+                         net (fo=1, unplaced)         0.803     5.136    tage_predictor/bram_bank1/DIB[10]
+                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/DIBDI[10]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -2920,18 +2946,115 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank1/CLKA
+                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/CLKBWRCLK
+
+Slack:                    inf
+  Source:                 ma_training_training_data[102]
+                            (input port)
+  Destination:            tage_predictor/bram_bank1/RAM_reg/DIBDI[9]
+                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        5.136ns  (logic 1.583ns (30.826%)  route 3.553ns (69.174%))
+  Logic Levels:           6  (IBUF=1 LUT3=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        2.131ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.131ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 r  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      r  tage_predictor/bram_bank1_i_44/I3
+                         LUT6 (Prop_lut6_I3_O)        0.124     2.549 f  tage_predictor/bram_bank1_i_44/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank1_i_44_n_0
+                                                                      f  tage_predictor/bram_bank1_i_34/I0
+                         LUT4 (Prop_lut4_I0_O)        0.116     3.114 f  tage_predictor/bram_bank1_i_34/O
+                         net (fo=22, unplaced)        0.511     3.625    tage_predictor/bram_bank1_i_34_n_0
+                                                                      f  tage_predictor/bram_bank1_i_38/I0
+                         LUT5 (Prop_lut5_I0_O)        0.124     3.749 r  tage_predictor/bram_bank1_i_38/O
+                         net (fo=2, unplaced)         0.460     4.209    tage_predictor/bram_bank1_i_38_n_0
+                                                                      r  tage_predictor/bram_bank1_i_24/I0
+                         LUT6 (Prop_lut6_I0_O)        0.124     4.333 r  tage_predictor/bram_bank1_i_24/O
+                         net (fo=1, unplaced)         0.803     5.136    tage_predictor/bram_bank1/DIB[9]
+                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/DIBDI[9]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock CLK rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  CLK (IN)
+                         net (fo=0)                   0.000     0.000    CLK
+                         IBUF                                         r  CLK_IBUF_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.838     0.838 r  CLK_IBUF_inst/O
+                         net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
+                         BUFG                                         r  CLK_IBUF_BUFG_inst/I
+                         BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank1/CLKA
+                         RAMB18E1                                     r  tage_predictor/bram_bank1/RAM_reg/CLKBWRCLK
+
+Slack:                    inf
+  Source:                 ma_training_training_data[102]
+                            (input port)
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[10]
+                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
+  Clock Path Skew:        2.131ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.131ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_15/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_15/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[6]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[10]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock CLK rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  CLK (IN)
+                         net (fo=0)                   0.000     0.000    CLK
+                         IBUF                                         r  CLK_IBUF_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.838     0.838 r  CLK_IBUF_inst/O
+                         net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
+                         BUFG                                         r  CLK_IBUF_BUFG_inst/I
+                         BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 Slack:                    inf
-  Source:                 ma_training_training_data[65]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[9]
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[11]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        4.141ns  (logic 1.343ns (32.437%)  route 2.798ns (67.563%))
-  Logic Levels:           4  (IBUF=1 LUT3=1 LUT5=1 LUT6=1)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -2939,21 +3062,24 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[65] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[65]
-                                                                      f  ma_training_training_data_IBUF[65]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[65]_inst/O
-                         net (fo=16, unplaced)        0.803     1.774    tage_predictor/ma_train_training_data[19]
-                                                                      f  tage_predictor/bram_bank2_i_44/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 r  tage_predictor/bram_bank2_i_44/O
-                         net (fo=2, unplaced)         0.743     2.641    tage_predictor/bram_bank2_i_44_n_0
-                                                                      r  tage_predictor/bram_bank2_i_37/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     2.765 r  tage_predictor/bram_bank2_i_37/O
-                         net (fo=1, unplaced)         0.449     3.214    tage_predictor/bram_bank2_i_37_n_0
-                                                                      r  tage_predictor/bram_bank2_i_24/I4
-                         LUT5 (Prop_lut5_I4_O)        0.124     3.338 r  tage_predictor/bram_bank2_i_24/O
-                         net (fo=1, unplaced)         0.803     4.141    tage_predictor/bram_bank2/DIB[9]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[9]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_14/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_14/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[7]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[11]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -2964,18 +3090,18 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 Slack:                    inf
-  Source:                 ma_training_training_data[67]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[11]
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[12]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        4.137ns  (logic 1.369ns (33.097%)  route 2.768ns (66.903%))
-  Logic Levels:           4  (IBUF=1 LUT3=1 LUT5=1 LUT6=1)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -2983,21 +3109,24 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 r  ma_training_training_data[67] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[67]
-                                                                      r  ma_training_training_data_IBUF[67]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[67]_inst/O
-                         net (fo=14, unplaced)        0.803     1.774    tage_predictor/ma_train_training_data[21]
-                                                                      r  tage_predictor/bram_bank2_i_39/I1
-                         LUT3 (Prop_lut3_I1_O)        0.150     1.924 r  tage_predictor/bram_bank2_i_39/O
-                         net (fo=2, unplaced)         0.743     2.667    tage_predictor/bram_bank2_i_39_n_0
-                                                                      r  tage_predictor/bram_bank2_i_35/I0
-                         LUT6 (Prop_lut6_I0_O)        0.124     2.791 r  tage_predictor/bram_bank2_i_35/O
-                         net (fo=1, unplaced)         0.419     3.210    tage_predictor/bram_bank2_i_35_n_0
-                                                                      r  tage_predictor/bram_bank2_i_22/I1
-                         LUT5 (Prop_lut5_I1_O)        0.124     3.334 r  tage_predictor/bram_bank2_i_22/O
-                         net (fo=1, unplaced)         0.803     4.137    tage_predictor/bram_bank2/DIB[11]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[11]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_13/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_13/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[8]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[12]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -3008,18 +3137,18 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 Slack:                    inf
-  Source:                 ma_training_training_data[69]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[1]
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[13]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        3.962ns  (logic 1.343ns (33.903%)  route 2.619ns (66.097%))
-  Logic Levels:           4  (IBUF=1 LUT2=1 LUT3=1 LUT6=1)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -3027,21 +3156,24 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[69] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[69]
-                                                                      f  ma_training_training_data_IBUF[69]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[69]_inst/O
-                         net (fo=1, unplaced)         0.803     1.774    ma_training_training_data_IBUF[69]
-                                                                      f  tage_predictor_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.124     1.898 f  tage_predictor_i_1/O
-                         net (fo=41, unplaced)        0.526     2.424    tage_predictor/ma_train_training_data[23]
-                                                                      f  tage_predictor/bram_bank2_i_38/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     2.548 r  tage_predictor/bram_bank2_i_38/O
-                         net (fo=8, unplaced)         0.487     3.035    tage_predictor/bram_bank2_i_38_n_0
-                                                                      r  tage_predictor/bram_bank2_i_32/I2
-                         LUT6 (Prop_lut6_I2_O)        0.124     3.159 r  tage_predictor/bram_bank2_i_32/O
-                         net (fo=1, unplaced)         0.803     3.962    tage_predictor/bram_bank2/DIB[1]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[1]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_12/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_12/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[9]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[13]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -3052,18 +3184,18 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 Slack:                    inf
-  Source:                 ma_training_training_data[69]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[2]
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[4]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        3.962ns  (logic 1.343ns (33.903%)  route 2.619ns (66.097%))
-  Logic Levels:           4  (IBUF=1 LUT2=1 LUT3=1 LUT6=1)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -3071,21 +3203,24 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[69] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[69]
-                                                                      f  ma_training_training_data_IBUF[69]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[69]_inst/O
-                         net (fo=1, unplaced)         0.803     1.774    ma_training_training_data_IBUF[69]
-                                                                      f  tage_predictor_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.124     1.898 f  tage_predictor_i_1/O
-                         net (fo=41, unplaced)        0.526     2.424    tage_predictor/ma_train_training_data[23]
-                                                                      f  tage_predictor/bram_bank2_i_38/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     2.548 r  tage_predictor/bram_bank2_i_38/O
-                         net (fo=8, unplaced)         0.487     3.035    tage_predictor/bram_bank2_i_38_n_0
-                                                                      r  tage_predictor/bram_bank2_i_31/I3
-                         LUT6 (Prop_lut6_I3_O)        0.124     3.159 r  tage_predictor/bram_bank2_i_31/O
-                         net (fo=1, unplaced)         0.803     3.962    tage_predictor/bram_bank2/DIB[2]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[2]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_21/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_21/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[0]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[4]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -3096,18 +3231,18 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 Slack:                    inf
-  Source:                 ma_training_training_data[69]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[3]
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[5]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        3.962ns  (logic 1.343ns (33.903%)  route 2.619ns (66.097%))
-  Logic Levels:           4  (IBUF=1 LUT2=1 LUT3=1 LUT6=1)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -3115,21 +3250,24 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[69] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[69]
-                                                                      f  ma_training_training_data_IBUF[69]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[69]_inst/O
-                         net (fo=1, unplaced)         0.803     1.774    ma_training_training_data_IBUF[69]
-                                                                      f  tage_predictor_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.124     1.898 f  tage_predictor_i_1/O
-                         net (fo=41, unplaced)        0.526     2.424    tage_predictor/ma_train_training_data[23]
-                                                                      f  tage_predictor/bram_bank2_i_38/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     2.548 r  tage_predictor/bram_bank2_i_38/O
-                         net (fo=8, unplaced)         0.487     3.035    tage_predictor/bram_bank2_i_38_n_0
-                                                                      r  tage_predictor/bram_bank2_i_30/I3
-                         LUT6 (Prop_lut6_I3_O)        0.124     3.159 r  tage_predictor/bram_bank2_i_30/O
-                         net (fo=1, unplaced)         0.803     3.962    tage_predictor/bram_bank2/DIB[3]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[3]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_20/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_20/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[1]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[5]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -3140,18 +3278,18 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 Slack:                    inf
-  Source:                 ma_training_training_data[69]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[4]
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[6]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        3.962ns  (logic 1.343ns (33.903%)  route 2.619ns (66.097%))
-  Logic Levels:           4  (IBUF=1 LUT2=1 LUT3=1 LUT6=1)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -3159,21 +3297,24 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[69] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[69]
-                                                                      f  ma_training_training_data_IBUF[69]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[69]_inst/O
-                         net (fo=1, unplaced)         0.803     1.774    ma_training_training_data_IBUF[69]
-                                                                      f  tage_predictor_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.124     1.898 f  tage_predictor_i_1/O
-                         net (fo=41, unplaced)        0.526     2.424    tage_predictor/ma_train_training_data[23]
-                                                                      f  tage_predictor/bram_bank2_i_38/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     2.548 r  tage_predictor/bram_bank2_i_38/O
-                         net (fo=8, unplaced)         0.487     3.035    tage_predictor/bram_bank2_i_38_n_0
-                                                                      r  tage_predictor/bram_bank2_i_29/I3
-                         LUT6 (Prop_lut6_I3_O)        0.124     3.159 r  tage_predictor/bram_bank2_i_29/O
-                         net (fo=1, unplaced)         0.803     3.962    tage_predictor/bram_bank2/DIB[4]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[4]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_19/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_19/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[2]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[6]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -3184,18 +3325,18 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 Slack:                    inf
-  Source:                 ma_training_training_data[69]
+  Source:                 ma_training_training_data[102]
                             (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[5]
+  Destination:            tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[7]
                             (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             (none)
   Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        3.962ns  (logic 1.343ns (33.903%)  route 2.619ns (66.097%))
-  Logic Levels:           4  (IBUF=1 LUT2=1 LUT3=1 LUT6=1)
+  Data Path Delay:        4.561ns  (logic 1.467ns (32.169%)  route 3.094ns (67.831%))
+  Logic Levels:           5  (IBUF=1 LUT2=1 LUT3=1 LUT5=1 LUT6=1)
   Clock Path Skew:        2.131ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.131ns
     Source Clock Delay      (SCD):    0.000ns
@@ -3203,21 +3344,24 @@ Slack:                    inf
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[69] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[69]
-                                                                      f  ma_training_training_data_IBUF[69]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[69]_inst/O
-                         net (fo=1, unplaced)         0.803     1.774    ma_training_training_data_IBUF[69]
-                                                                      f  tage_predictor_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.124     1.898 f  tage_predictor_i_1/O
-                         net (fo=41, unplaced)        0.526     2.424    tage_predictor/ma_train_training_data[23]
-                                                                      f  tage_predictor/bram_bank2_i_38/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     2.548 r  tage_predictor/bram_bank2_i_38/O
-                         net (fo=8, unplaced)         0.487     3.035    tage_predictor/bram_bank2_i_38_n_0
-                                                                      r  tage_predictor/bram_bank2_i_28/I3
-                         LUT6 (Prop_lut6_I3_O)        0.124     3.159 r  tage_predictor/bram_bank2_i_28/O
-                         net (fo=1, unplaced)         0.803     3.962    tage_predictor/bram_bank2/DIB[5]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[5]
+                                                      0.000     0.000 r  ma_training_training_data[102] (IN)
+                         net (fo=0)                   0.000     0.000    ma_training_training_data[102]
+                                                                      r  ma_training_training_data_IBUF[102]_inst/I
+                         IBUF (Prop_ibuf_I_O)         0.971     0.971 r  ma_training_training_data_IBUF[102]_inst/O
+                         net (fo=2, unplaced)         0.803     1.774    ma_training_training_data_IBUF[102]
+                                                                      r  tage_predictor_i_1/I2
+                         LUT3 (Prop_lut3_I2_O)        0.124     1.898 f  tage_predictor_i_1/O
+                         net (fo=42, unplaced)        0.527     2.425    tage_predictor/ma_train_training_data[23]
+                                                                      f  tage_predictor/bram_bank2_i_43/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     2.549 f  tage_predictor/bram_bank2_i_43/O
+                         net (fo=1, unplaced)         0.449     2.998    tage_predictor/bram_bank2_i_43_n_0
+                                                                      f  tage_predictor/bram_bank2_i_34/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124     3.122 r  tage_predictor/bram_bank2_i_34/O
+                         net (fo=23, unplaced)        0.512     3.634    tage_predictor/bram_bank2_i_34_n_0
+                                                                      r  tage_predictor/bram_bank2_i_18/I3
+                         LUT5 (Prop_lut5_I3_O)        0.124     3.758 r  tage_predictor/bram_bank2_i_18/O
+                         net (fo=1, unplaced)         0.803     4.561    tage_predictor/bram_bank2/ADDRB[3]
+                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/ADDRBWRADDR[7]
   -------------------------------------------------------------------    -------------------
 
                          (clock CLK rise edge)        0.000     0.000 r  
@@ -3228,95 +3372,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
-
-Slack:                    inf
-  Source:                 ma_training_training_data[69]
-                            (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[6]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Path Group:             (none)
-  Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        3.962ns  (logic 1.343ns (33.903%)  route 2.619ns (66.097%))
-  Logic Levels:           4  (IBUF=1 LUT2=1 LUT3=1 LUT6=1)
-  Clock Path Skew:        2.131ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    2.131ns
-    Source Clock Delay      (SCD):    0.000ns
-    Clock Pessimism Removal (CPR):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[69] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[69]
-                                                                      f  ma_training_training_data_IBUF[69]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[69]_inst/O
-                         net (fo=1, unplaced)         0.803     1.774    ma_training_training_data_IBUF[69]
-                                                                      f  tage_predictor_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.124     1.898 f  tage_predictor_i_1/O
-                         net (fo=41, unplaced)        0.526     2.424    tage_predictor/ma_train_training_data[23]
-                                                                      f  tage_predictor/bram_bank2_i_38/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     2.548 r  tage_predictor/bram_bank2_i_38/O
-                         net (fo=8, unplaced)         0.487     3.035    tage_predictor/bram_bank2_i_38_n_0
-                                                                      r  tage_predictor/bram_bank2_i_27/I3
-                         LUT6 (Prop_lut6_I3_O)        0.124     3.159 r  tage_predictor/bram_bank2_i_27/O
-                         net (fo=1, unplaced)         0.803     3.962    tage_predictor/bram_bank2/DIB[6]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[6]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock CLK rise edge)        0.000     0.000 r  
-                                                      0.000     0.000 r  CLK (IN)
-                         net (fo=0)                   0.000     0.000    CLK
-                         IBUF                                         r  CLK_IBUF_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.838     0.838 r  CLK_IBUF_inst/O
-                         net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
-                         BUFG                                         r  CLK_IBUF_BUFG_inst/I
-                         BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
-
-Slack:                    inf
-  Source:                 ma_training_training_data[69]
-                            (input port)
-  Destination:            tage_predictor/bram_bank2/RAM_reg/DIBDI[7]
-                            (rising edge-triggered cell RAMB18E1 clocked by CLK  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Path Group:             (none)
-  Path Type:              Setup (Max at Slow Process Corner)
-  Data Path Delay:        3.962ns  (logic 1.343ns (33.903%)  route 2.619ns (66.097%))
-  Logic Levels:           4  (IBUF=1 LUT2=1 LUT3=1 LUT6=1)
-  Clock Path Skew:        2.131ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    2.131ns
-    Source Clock Delay      (SCD):    0.000ns
-    Clock Pessimism Removal (CPR):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                                                      0.000     0.000 f  ma_training_training_data[69] (IN)
-                         net (fo=0)                   0.000     0.000    ma_training_training_data[69]
-                                                                      f  ma_training_training_data_IBUF[69]_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.971     0.971 f  ma_training_training_data_IBUF[69]_inst/O
-                         net (fo=1, unplaced)         0.803     1.774    ma_training_training_data_IBUF[69]
-                                                                      f  tage_predictor_i_1/I1
-                         LUT2 (Prop_lut2_I1_O)        0.124     1.898 f  tage_predictor_i_1/O
-                         net (fo=41, unplaced)        0.526     2.424    tage_predictor/ma_train_training_data[23]
-                                                                      f  tage_predictor/bram_bank2_i_38/I2
-                         LUT3 (Prop_lut3_I2_O)        0.124     2.548 r  tage_predictor/bram_bank2_i_38/O
-                         net (fo=8, unplaced)         0.487     3.035    tage_predictor/bram_bank2_i_38_n_0
-                                                                      r  tage_predictor/bram_bank2_i_26/I3
-                         LUT6 (Prop_lut6_I3_O)        0.124     3.159 r  tage_predictor/bram_bank2_i_26/O
-                         net (fo=1, unplaced)         0.803     3.962    tage_predictor/bram_bank2/DIB[7]
-                         RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/DIBDI[7]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock CLK rise edge)        0.000     0.000 r  
-                                                      0.000     0.000 r  CLK (IN)
-                         net (fo=0)                   0.000     0.000    CLK
-                         IBUF                                         r  CLK_IBUF_inst/I
-                         IBUF (Prop_ibuf_I_O)         0.838     0.838 r  CLK_IBUF_inst/O
-                         net (fo=1, unplaced)         0.763     1.601    CLK_IBUF
-                         BUFG                                         r  CLK_IBUF_BUFG_inst/I
-                         BUFG (Prop_bufg_I_O)         0.091     1.692 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
+                         net (fo=279, unplaced)       0.439     2.131    tage_predictor/bram_bank2/CLKA
                          RAMB18E1                                     r  tage_predictor/bram_bank2/RAM_reg/CLKBWRCLK
 
 
@@ -3357,7 +3413,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3392,7 +3448,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3427,7 +3483,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3462,7 +3518,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3497,7 +3553,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3532,7 +3588,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3567,7 +3623,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3602,7 +3658,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3637,7 +3693,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way1/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way1/CLKA
                          RAMB18E1                                     r  btb/bram_way1/RAM_reg/CLKARDCLK
 
 Slack:                    inf
@@ -3672,7 +3728,7 @@ Slack:                    inf
                          net (fo=1, unplaced)         0.356     0.745    CLK_IBUF
                          BUFG                                         r  CLK_IBUF_BUFG_inst/I
                          BUFG (Prop_bufg_I_O)         0.029     0.774 r  CLK_IBUF_BUFG_inst/O
-                         net (fo=280, unplaced)       0.259     1.033    btb/bram_way2/CLKA
+                         net (fo=279, unplaced)       0.259     1.033    btb/bram_way2/CLKA
                          RAMB18E1                                     r  btb/bram_way2/RAM_reg/CLKARDCLK
 
 

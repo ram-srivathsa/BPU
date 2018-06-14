@@ -1,7 +1,7 @@
 Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2016.1 (lin64) Build 1538259 Fri Apr  8 15:45:23 MDT 2016
-| Date         : Thu Jun 14 11:53:58 2018
+| Date         : Thu Jun 14 15:06:49 2018
 | Host         : ram-Lenovo-ideapad-520-15IKB running 64-bit Ubuntu 16.04.4 LTS
 | Command      : report_utilization -hierarchical -file .//fpga/mkbpu/syn_area.txt
 | Design       : mkbpu
@@ -21,7 +21,7 @@ Table of Contents
 +----------------------+---------------------------+------------+------------+---------+------+-----+--------+--------+--------------+
 |       Instance       |           Module          | Total LUTs | Logic LUTs | LUTRAMs | SRLs | FFs | RAMB36 | RAMB18 | DSP48 Blocks |
 +----------------------+---------------------------+------------+------------+---------+------+-----+--------+--------+--------------+
-| mkbpu                |                     (top) |        575 |        555 |      16 |    4 | 242 |      0 |      9 |            0 |
+| mkbpu                |                     (top) |        579 |        559 |      16 |    4 | 241 |      0 |      9 |            0 |
 |   (mkbpu)            |                     (top) |         36 |         36 |       0 |    0 |  32 |      0 |      0 |            0 |
 |   btb                |                     mkbtb |        275 |        259 |      16 |    0 |  44 |      0 |      4 |            0 |
 |     (btb)            |                     mkbtb |        255 |        255 |       0 |    0 |  42 |      0 |      0 |            0 |
@@ -30,8 +30,8 @@ Table of Contents
 |     bram_way2        | BRAM2Load__parameterized1 |          0 |          0 |       0 |    0 |   0 |      0 |      1 |            0 |
 |     bram_way3        | BRAM2Load__parameterized2 |          0 |          0 |       0 |    0 |   0 |      0 |      1 |            0 |
 |     bram_way4        | BRAM2Load__parameterized3 |          0 |          0 |       0 |    0 |   0 |      0 |      1 |            0 |
-|   tage_predictor     |                  mkbranch |        264 |        260 |       0 |    4 | 166 |      0 |      5 |            0 |
-|     (tage_predictor) |                  mkbranch |        264 |        260 |       0 |    4 | 166 |      0 |      0 |            0 |
+|   tage_predictor     |                  mkbranch |        268 |        264 |       0 |    4 | 165 |      0 |      5 |            0 |
+|     (tage_predictor) |                  mkbranch |        268 |        264 |       0 |    4 | 165 |      0 |      0 |            0 |
 |     bram_bank1       | BRAM2Load__parameterized4 |          0 |          0 |       0 |    0 |   0 |      0 |      1 |            0 |
 |     bram_bank2       | BRAM2Load__parameterized5 |          0 |          0 |       0 |    0 |   0 |      0 |      1 |            0 |
 |     bram_bank3       | BRAM2Load__parameterized6 |          0 |          0 |       0 |    0 |   0 |      0 |      1 |            0 |
