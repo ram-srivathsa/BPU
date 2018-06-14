@@ -20,10 +20,6 @@ import branch2 :: *;
 `define VADDR 40
 `define SIZE_PC 32
 
-//typedef struct{Gv_pc pc;Bool truth;Bit#(1) prediction;Gv_counter counter;Gv_tag tag;Bit#(5) bank_bits;Gv_bank_num bank_no;Gv_counter bimodal;} Gv_train_predictor deriving(Bits);
-//typedef struct{Gv_pc pc;Gv_btb_val branch_imm;Gv_ways way_num;} Gv_update_btb deriving(Bits);
-//typedef struct{Bit#(1) prediction;Gv_counter counter;Gv_tag tag;Bit#(5) bank_bits;Gv_bank_num bank_num;Gv_counter bimodal_counter;} Gv_return_predictor deriving(Bits);
-//typedef struct{Bool hit;Gv_ways way_num;Gv_pc branch_pc;} Gv_return_btb deriving(Bits);
 typedef Bit#(`SIZE_PC) Gv_pc_size;
 
 //according to the existing c-class interface
@@ -90,12 +86,27 @@ module mkbpu(Ifc_bpu);
 			btb.ma_update(btb_update);
 			if(!predictor_train.truth)
 			begin
-				predictor_train.truth=True;
-				tage_predictor.ma_train(predictor_train);
+				if(unpack(predictor_train.prediction))
+				begin
+					predictor_train.truth=True;
+					tage_predictor.ma_train(predictor_train);
+				end
+				
+				else
+					tage_predictor.ma_train(predictor_train);
 			end
 		
 			else
-				tage_predictor.ma_train(predictor_train);
+			begin
+				if(unpack(predictor_train.prediction))
+				begin
+					predictor_train.truth=False;
+					tage_predictor.ma_train(predictor_train);
+				end
+				
+				else
+					tage_predictor.ma_train(predictor_train);
+			end
 		end
 		
 		else
