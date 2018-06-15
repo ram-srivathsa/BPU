@@ -21,13 +21,17 @@ import branch2 :: *;
 `define SIZE_PC 32
 
 typedef Bit#(`SIZE_PC) Gv_pc_size;
+//return value of btb after extracting the branch pc
+typedef struct{Bool hit;Gv_ways way_num;} Gv_modreturn_btb deriving(Bits);
+//return value of bpu as a whole; includes the predictor and btb returned values; branch address is extracted from btb return value and sent separately
+typedef struct{Bool final_pred;Gv_return_predictor tage_return;Gv_modreturn_btb btb_return;} Gv_return_bpu deriving(Bits);
 
 //according to the existing c-class interface
 interface Ifc_bpu;
 	//to pass the incoming pc to both the predictor as well as the btb
 	interface Put#(Tuple2#(Bit#(3),Bit#(`VADDR))) send_prediction_request;
-	//returns the final prediction as a Bool value along with the values returned by the predictor's and the btb's mn_get() methods, check their respective files
-	interface Get#(Tuple3#(Bool,Gv_return_predictor,Gv_return_btb)) prediction_response;
+	//returns the final prediction as a Bool value along with the values returned by the predictor's and the btb's mn_get() methods, check their respective files; also sends the incoming pc
+	interface Get#(Tuple4#(Bit#(3),Bit#(`VADDR),Bit#(`VADDR),Gv_return_bpu)) prediction_response;
 	//initiates flush operations on both the btb as well as the predictor
 	method Action ma_flush;
 	//inputs training & update data for both the predictor as well as the btb; also inputs whether there was a 'hit' or a 'miss' on the BTB as a Bool 
@@ -38,7 +42,7 @@ endinterface
 module mkbpu(Ifc_bpu);
 	Ifc_branch tage_predictor <- mkbranch;
 	Ifc_btb btb <- mkbtb;
-	Reg#(Gv_pc_size) rg_pc_copy <- mkReg(0);
+	Reg#(Tuple2#(Bit#(3),Bit#(`VADDR))) rg_req_copy <- mkRegU;
 	//FIFOF#(Tuple2#(Bit#(3),Bit#(`VADDR))) capture_prediction_request <-mkLFIFOF();
 	interface send_prediction_request = interface Put 
 		method Action put(Tuple2#(Bit#(3),Bit#(`VADDR)) req);
@@ -46,7 +50,7 @@ module mkbpu(Ifc_bpu);
 			`ifdef verbose $display($time,"\tBPU: Prediction Request for Address: %h",vaddress); `endif
 			tage_predictor.ma_put(vaddress[31:0]);
 			btb.ma_put(vaddress[31:0]);
-			rg_pc_copy<= vaddress[31:0];
+			rg_req_copy<= req;
 			//capture_prediction_request.enq(req);
 		endmethod
 	endinterface;
@@ -54,24 +58,35 @@ module mkbpu(Ifc_bpu);
 	//the final prediction depends not only on the prediction by the predictor but also on whether there was a hit or a miss in the BTB
 	//if the predictor predicts 'taken' but there is a miss in the BTB, final prediction is 'not taken'
 	interface prediction_response = interface Get
-		method ActionValue#(Tuple3#(Bool,Gv_return_predictor,Gv_return_btb)) get;
+		method ActionValue#(Tuple4#(Bit#(3),Bit#(`VADDR),Bit#(`VADDR),Gv_return_bpu)) get;
 			let tage_return= tage_predictor.mn_get();
-			let btb_return= btb.mn_get();
-			Bool final_predict;
+			let btb_get= btb.mn_get();
+			let {lv_epoch,lv_incoming_pc}= rg_req_copy;
+
+			Bit#(`VADDR) branch_pc=zeroExtend(btb_get.branch_pc);
+
+			Gv_modreturn_btb btb_return;
+			btb_return.hit= btb_get.hit;
+			btb_return.way_num= btb_get.way_num;
+
+			Gv_return_bpu bpu_return;
+			bpu_return.btb_return= btb_return;
+			bpu_return.tage_return= tage_return;
+			
 			if(!btb_return.hit)
 			begin
-				final_predict= `NOT_TAKEN;
-				btb_return.branch_pc= rg_pc_copy+4;
+				bpu_return.final_pred= `NOT_TAKEN;
+				branch_pc= zeroExtend(lv_incoming_pc[31:0]+4);
 			end
 
 			else
 			begin
-				final_predict= unpack(tage_return.prediction);
+				bpu_return.final_pred= unpack(tage_return.prediction);
 				if(!unpack(tage_return.prediction))
-					btb_return.branch_pc= rg_pc_copy+4;
+					branch_pc= zeroExtend(lv_incoming_pc[31:0]+4);
 			end
 
-			let resp=tuple3(final_predict,tage_return,btb_return);
+			let resp=tuple4(lv_epoch,lv_incoming_pc,branch_pc,bpu_return);
 			return resp;
 		endmethod
 	endinterface;
