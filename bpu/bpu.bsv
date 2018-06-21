@@ -22,7 +22,7 @@ import branch2 :: *;
 
 typedef Bit#(`SIZE_PC) Gv_pc_size;
 //return value of btb after extracting the branch pc
-typedef struct{Bool hit;Gv_ways way_num;} Gv_modreturn_btb deriving(Bits);
+typedef struct{Bool hit_bram;Bool hit_vrg;Gv_ways way_num;} Gv_modreturn_btb deriving(Bits);
 //return value of bpu as a whole; includes the predictor and btb returned values; branch address is extracted from btb return value and sent separately
 typedef struct{Bool final_pred;Gv_return_predictor tage_return;Gv_modreturn_btb btb_return;} Gv_return_bpu deriving(Bits);
 
@@ -34,7 +34,7 @@ interface Ifc_bpu;
 	interface Get#(Tuple4#(Bit#(3),Bit#(`VADDR),Bit#(`VADDR),Gv_return_bpu)) prediction_response;
 	//initiates flush operations on both the btb as well as the predictor
 	method Action ma_flush;
-	//inputs training & update data for both the predictor as well as the btb; also inputs whether there was a 'hit' or a 'miss' on the BTB as a Bool 
+	//inputs training & update data for both the predictor as well as the btb; also inputs whether there was a 'hit' or a 'miss' on the BTB as a Bool and whether the branch was conditional or not
 	method Action ma_training(Tuple3#(Bool,Gv_train_predictor,Gv_update_btb) training_data);
 endinterface
 
@@ -66,24 +66,25 @@ module mkbpu(Ifc_bpu);
 			Bit#(`VADDR) branch_pc=zeroExtend(btb_get.branch_pc);
 
 			Gv_modreturn_btb btb_return;
-			btb_return.hit= btb_get.hit;
+			btb_return.hit_bram= btb_get.hit_bram;
+			btb_return.hit_vrg= btb_get.hit_vrg;
 			btb_return.way_num= btb_get.way_num;
 
 			Gv_return_bpu bpu_return;
 			bpu_return.btb_return= btb_return;
 			bpu_return.tage_return= tage_return;
 			
-			if(!btb_return.hit)
+			if(!(btb_return.hit_bram || btb_return.hit_vrg))
 			begin
 				bpu_return.final_pred= `NOT_TAKEN;
-				branch_pc= zeroExtend(lv_incoming_pc[31:0]+4);
 			end
 
 			else
 			begin
+				if(btb_return.hit_bram)
 				bpu_return.final_pred= unpack(tage_return.prediction);
-				if(!unpack(tage_return.prediction))
-					branch_pc= zeroExtend(lv_incoming_pc[31:0]+4);
+				else
+					bpu_return.final_pred= `TAKEN;
 			end
 
 			let resp=tuple4(lv_epoch,lv_incoming_pc,branch_pc,bpu_return);
@@ -96,37 +97,49 @@ module mkbpu(Ifc_bpu);
 	//training must be done accordingly
 	method Action ma_training(Tuple3#(Bool,Gv_train_predictor,Gv_update_btb) training_data);
 		let {hit,predictor_train,btb_update} = training_data;
-		if(!hit)
+		let conditional = btb_update.conditional;
+		if(conditional)
 		begin
-			btb.ma_update(btb_update);
-			if(!predictor_train.truth)
+			if(!hit)
 			begin
-				if(unpack(predictor_train.prediction))
+				btb.ma_update(btb_update);
+				if(!predictor_train.truth)
 				begin
-					predictor_train.truth=True;
-					tage_predictor.ma_train(predictor_train);
-				end
+					if(unpack(predictor_train.prediction))
+					begin
+						predictor_train.truth=True;
+						tage_predictor.ma_train(predictor_train);
+					end
 				
+					else
+						tage_predictor.ma_train(predictor_train);
+				end
+		
 				else
-					tage_predictor.ma_train(predictor_train);
+				begin
+					if(unpack(predictor_train.prediction))
+					begin
+						predictor_train.truth=False;
+						tage_predictor.ma_train(predictor_train);
+					end
+				
+					else
+						tage_predictor.ma_train(predictor_train);
+				end
 			end
 		
 			else
-			begin
-				if(unpack(predictor_train.prediction))
-				begin
-					predictor_train.truth=False;
-					tage_predictor.ma_train(predictor_train);
-				end
-				
-				else
-					tage_predictor.ma_train(predictor_train);
-			end
+			
+				tage_predictor.ma_train(predictor_train);
+		end
+			
+		else
+		begin
+			if(!hit)
+				btb.ma_update(btb_update);
 		end
 		
-		else
-			
-			tage_predictor.ma_train(predictor_train);	
+
 	endmethod
 	
 	method Action ma_flush;

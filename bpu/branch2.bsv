@@ -86,6 +86,12 @@ module mkbranch(Ifc_branch);
 	Randomize#(Gv_bank_num) random_bank1 <- mkConstrainedRandomizer(2,4);
 	Randomize#(Gv_bank_num) random_bank2 <- mkConstrainedRandomizer(3,4);
 
+	//outputs of the banks
+	Wire#(Gv_bimodal_data) wr_bimodal_out <- mkWire();
+	Wire#(Gv_global_data) wr_bank1_out <- mkWire();
+	Wire#(Gv_global_data) wr_bank2_out <- mkWire();
+	Wire#(Gv_global_data) wr_bank3_out <- mkWire();
+	Wire#(Gv_global_data) wr_bank4_out <- mkWire();
 	//copy of incoming pc for update stages
 	Reg#(Gv_pc) rg_pc_copy <- mkReg(0);
 	//to control flushing operation
@@ -129,27 +135,21 @@ module mkbranch(Ifc_branch);
 	Wire#(Gv_counter) wr_bimodal_counter <- mkWire;
 
 
-	//rule to read bram outputs and perform the complete prediction; computes hash outputs,performs comparisons and muxing(through if else tree)
+	//rule to perform the complete prediction; computes hash outputs,performs comparisons and muxing(through if else tree)
 	//updates the counter value of matching bank as well as m,u bits of all banks and the bank no. of matching bank
 	rule rl_predict;
-		Gv_bimodal_data lv_bimodal_out= bram_bimodal.a.read();
-		Gv_global_data lv_bank1_out= bram_bank1.a.read();
-		Gv_global_data lv_bank2_out= bram_bank2.a.read();
-		Gv_global_data lv_bank3_out= bram_bank3.a.read();
-		Gv_global_data lv_bank4_out= bram_bank4.a.read();
+		Bool lv_compare1=fn_compare(wr_bank1_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank1_csr_p,rg_bank1_csr_s)); //compare tag output of bank 4 with hash function output at bank 4
+		Bool lv_compare2=fn_compare(wr_bank2_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank2_csr_p,rg_bank2_csr_s)); //compare tag output of bank 3 with hash function output at bank 3
+		Bool lv_compare3=fn_compare(wr_bank3_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank3_csr_p,rg_bank3_csr_s)); //compare tag output of bank 2 with hash function output at bank 2
+		Bool lv_compare4=fn_compare(wr_bank4_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank4_csr_p,rg_bank4_csr_s)); //compare tag output of bank 1 with hash function output at bank 1
 		
-		Bool lv_compare1=fn_compare(lv_bank1_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank1_csr_p,rg_bank1_csr_s)); //compare tag output of bank 4 with hash function output at bank 4
-		Bool lv_compare2=fn_compare(lv_bank2_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank2_csr_p,rg_bank2_csr_s)); //compare tag output of bank 3 with hash function output at bank 3
-		Bool lv_compare3=fn_compare(lv_bank3_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank3_csr_p,rg_bank3_csr_s)); //compare tag output of bank 2 with hash function output at bank 2
-		Bool lv_compare4=fn_compare(lv_bank4_out[8:1], fn_hash_tag(rg_pc_copy[7:0],rg_bank4_csr_p,rg_bank4_csr_s)); //compare tag output of bank 1 with hash function output at bank 1
-		
-		wr_bank_bits<= {lv_bimodal_out[0],lv_bank1_out[0],lv_bank2_out[0],lv_bank3_out[0],lv_bank4_out[0]};
-		wr_bimodal_counter<= lv_bimodal_out[3:1];
+		wr_bank_bits<= {wr_bimodal_out[0],wr_bank1_out[0],wr_bank2_out[0],wr_bank3_out[0],wr_bank4_out[0]};
+		wr_bimodal_counter<= wr_bimodal_out[3:1];
 		if (lv_compare4)   
 		begin             
-			wr_prediction<= lv_bank4_out[11];     //for type conversion from Bit#(1) to Bool	
-			wr_counter<= lv_bank4_out[11:9];
-			wr_tag<= lv_bank4_out[8:1];
+			wr_prediction<= wr_bank4_out[11];     //for type conversion from Bit#(1) to Bool	
+			wr_counter<= wr_bank4_out[11:9];
+			wr_tag<= wr_bank4_out[8:1];
 			wr_bank_num<= 3'b100;
 		end
 
@@ -157,9 +157,9 @@ module mkbranch(Ifc_branch);
 		begin
 			if(lv_compare3) 
 			begin
-				wr_prediction<= lv_bank3_out[11];			
-				wr_counter<= lv_bank3_out[11:9];
-				wr_tag<= lv_bank3_out[8:1];
+				wr_prediction<= wr_bank3_out[11];			
+				wr_counter<= wr_bank3_out[11:9];
+				wr_tag<= wr_bank3_out[8:1];
 				wr_bank_num<= 3'b011;
 			end
 
@@ -167,9 +167,9 @@ module mkbranch(Ifc_branch);
 			begin
 				if(lv_compare2) 
 				begin
-					wr_prediction<= lv_bank2_out[11]; 		
-					wr_counter<= lv_bank2_out[11:9];
-					wr_tag<= lv_bank2_out[8:1];
+					wr_prediction<= wr_bank2_out[11]; 		
+					wr_counter<= wr_bank2_out[11:9];
+					wr_tag<= wr_bank2_out[8:1];
 					wr_bank_num<= 3'b010;
 				end
 
@@ -177,16 +177,16 @@ module mkbranch(Ifc_branch);
 				begin
 					if(lv_compare1) 
 					begin
-						wr_prediction<= lv_bank1_out[11];	
-						wr_counter<= lv_bank1_out[11:9];
-						wr_tag<= lv_bank1_out[8:1];
+						wr_prediction<= wr_bank1_out[11];	
+						wr_counter<= wr_bank1_out[11:9];
+						wr_tag<= wr_bank1_out[8:1];
 						wr_bank_num<= 3'b001;
 					end
 	
 					else                                                                                          //none of the tags match
 					begin						
-						wr_prediction<= lv_bimodal_out[3];	
-						wr_counter<= lv_bimodal_out[3:1];
+						wr_prediction<= wr_bimodal_out[3];	
+						wr_counter<= wr_bimodal_out[3:1];
 						wr_tag<= ?;
 						wr_bank_num<= 3'b000;
 					end                                                     
@@ -194,6 +194,16 @@ module mkbranch(Ifc_branch);
 			end
 		end
 		
+	endrule
+
+
+	//reads bram outputs onto the wires; separate rule used instead of putting it in ma_put to prevent scheduling issues if any
+	rule rl_read_bram;
+		wr_bimodal_out<= bram_bimodal.a.read();
+		wr_bank1_out<= bram_bank1.a.read();
+		wr_bank2_out<= bram_bank2.a.read();
+		wr_bank3_out<= bram_bank3.a.read();
+		wr_bank4_out<= bram_bank4.a.read();
 	endrule
 
 
