@@ -22,7 +22,7 @@ import branch2 :: *;
 
 typedef Bit#(`SIZE_PC) Gv_pc_size;
 //return value of btb after extracting the branch pc
-typedef struct{Bool hit_bram;Bool hit_vrg;Gv_ways way_num;} Gv_modreturn_btb deriving(Bits);
+typedef struct{Bool hit;Gv_ways way_num;} Gv_modreturn_btb deriving(Bits);
 //return value of bpu as a whole; includes the predictor and btb returned values; branch address is extracted from btb return value and sent separately
 typedef struct{Bool final_pred;Gv_return_predictor tage_return;Gv_modreturn_btb btb_return;} Gv_return_bpu deriving(Bits);
 
@@ -66,23 +66,22 @@ module mkbpu(Ifc_bpu);
 			Bit#(`VADDR) branch_pc=zeroExtend(btb_get.branch_pc);
 
 			Gv_modreturn_btb btb_return;
-			btb_return.hit_bram= btb_get.hit_bram;
-			btb_return.hit_vrg= btb_get.hit_vrg;
+			btb_return.hit= (btb_get.hit_bram || btb_get.hit_vrg);
 			btb_return.way_num= btb_get.way_num;
 
 			Gv_return_bpu bpu_return;
 			bpu_return.btb_return= btb_return;
 			bpu_return.tage_return= tage_return;
 			
-			if(!(btb_return.hit_bram || btb_return.hit_vrg))
+			if(!(btb_return.hit))
 			begin
 				bpu_return.final_pred= `NOT_TAKEN;
 			end
 
 			else
 			begin
-				if(btb_return.hit_bram)
-				bpu_return.final_pred= unpack(tage_return.prediction);
+				if(btb_get.hit_bram)
+					bpu_return.final_pred= unpack(tage_return.prediction);
 				else
 					bpu_return.final_pred= `TAKEN;
 			end
